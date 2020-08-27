@@ -43,24 +43,28 @@ class MainApp(App):
         button_text = instance.text
 
         if button_text == "C":
-            #clear the solution
+            # Clear the solution widget
             self.solution.text = ""
         else:
             if current and (
-                self.last_operator and button_text in self.operators):
-                #Don't add 2 operators right after each other
+                self.last_was_operator and button_text in self.operators):
+                # Don't add two operators right after each other
                 return
             elif current == "" and button_text in self.operators:
-                #First Character cannot be an Operator
+                # First character cannot be an operator
                 return
             else:
                 new_text = current + button_text
                 self.solution.text = new_text
         self.last_button = button_text
-        self.last_operator = self.last_button in self.operators
+        self.last_was_operator = self.last_button in self.operators
 
     def on_solution(self, instance):
         text = self.solution.text
         if text:
             solution = str(eval(self.solution.text))
             self.solution.text = solution
+
+if __name__ == "__main__":
+    app = MainApp()
+    app.run()
